@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg:      #05080F;
+    --panel:   #090E1A;
+    --border:  #162035;
+    --border2: #1E3050;
+    --tx:      #B8CCDF;
+    --tx2:     #6A8BA8;
+    --c1:      #00C9A7;
+    --c2:      #F0A500;
+    --c3:      #4A9ECA;
+    --danger:  #E53E3E;
+    --warn:    #DD6B20;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--tx);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--c3); }
+}
+
+@layer components {
+  /* Scanline texture overlay on header */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 201, 167, 0.015) 2px,
+      rgba(0, 201, 167, 0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grid dot background */
+  .dot-grid {
+    background-image: radial-gradient(circle, #1E3050 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Glow accent */
+  .glow-c1 { box-shadow: 0 0 20px rgba(0,201,167,0.15); }
+  .glow-c2 { box-shadow: 0 0 20px rgba(240,165,0,0.15); }
+  .glow-c3 { box-shadow: 0 0 20px rgba(74,158,202,0.15); }
+
+  /* Tab button */
+  .tab-btn {
+    @apply font-mono text-xs tracking-widest uppercase px-4 py-2.5
+           text-tx2 border-b-2 border-transparent transition-all duration-200
+           hover:text-tx hover:border-border2 whitespace-nowrap;
+  }
+  .tab-btn.active {
+    @apply text-c1 border-c1;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply relative bg-panel border border-border rounded-md p-4
+           overflow-hidden transition-all duration-200 hover:border-border2;
+  }
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-px;
+  }
+
+  /* Section label */
+  .sec-label {
+    @apply font-mono text-xs tracking-widest uppercase text-c3
+           border-b border-border pb-1.5 mb-3;
+  }
+
+  /* Alert box */
+  .alert {
+    @apply rounded border px-3.5 py-2.5 text-sm leading-relaxed;
+  }
+  .alert-amber { @apply bg-c2/5 border-c2/30 text-c2; }
+  .alert-blue  { @apply bg-c3/5 border-c3/30 text-c3; }
+  .alert-red   { @apply bg-danger/5 border-danger/30 text-danger; }
+
+  /* Insight box */
+  .insight {
+    @apply bg-panel border border-border2 rounded-md p-4 text-sm leading-relaxed;
+  }
+
+  /* Win badge */
+  .win-badge {
+    @apply inline-block font-mono text-xs px-1.5 py-0.5 rounded
+           bg-c1/10 text-c1 border border-c1/40 ml-1.5 align-middle;
+  }
+
+  /* Loader dot */
+  .dot-pulse {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-c1 animate-pulse-slow;
+  }
+}
+
+/* Plotly overrides — dark theme */
+.js-plotly-plot .plotly,
+.js-plotly-plot .plotly .main-svg {
+  background: transparent !important;
+}
+.js-plotly-plot .plotly .bg {
+  fill: transparent !important;
+}
+
+/* Plotly modebar */
+.modebar-container { opacity: 0.4; transition: opacity 0.2s; }
+.modebar-container:hover { opacity: 1; }
+.modebar-btn path { fill: var(--tx2) !important; }
